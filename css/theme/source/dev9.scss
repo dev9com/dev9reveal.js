@@ -46,6 +46,8 @@ section.has-dark-background {
 section {
 	text-align: left;
 	height: 100%;
+	padding-top: 0 !important;
+    padding-bottom: 0 !important;
 	&:before {
 		display: block;
 	    position: absolute;
