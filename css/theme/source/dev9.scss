@@ -12,7 +12,7 @@
 
 
 // Include theme-specific fonts
-@import url(https://fonts.googleapis.com/css?family=Poppins);
+@import url(https://fonts.googleapis.com/css?family=Nunito);
 
 
 // Override theme settings (see ../template/settings.scss)
@@ -22,8 +22,8 @@ $mainColor: #000;
 $headingColor: rgba(74,134,232,1);
 
 $mainFontSize: 38px;
-$mainFont: 'Poppins', sans-serif;
-$headingFont: 'Poppins', sans-serif;
+$mainFont: 'Nunito', sans-serif;
+$headingFont: 'Nunito', sans-serif;
 $headingTextShadow: none;
 $headingLetterSpacing: normal;
 $headingTextTransform: uppercase;
@@ -45,7 +45,7 @@ section.has-dark-background {
 
 section {
 	text-align: left;
-	height: 80%;
+	height: 100%;
 	&:before {
 		display: block;
 	    position: absolute;
@@ -98,19 +98,29 @@ li {
 html.cover-page body {
 	background: url('../../images/cover-background.svg');
 	background-position: left;
-	background-size: contain;
+	background-size: cover;
+	background-repeat: no-repeat;
 	section {
 		&:before {
 			background: none;
 		}
 
-		left: -25%;
 		.title {
 			color: #fff;
+			text-shadow:    
+				-1px -1px 0 #000492,  
+			    1px -1px 0 #000492,
+			    -1px 1px 0 #000492,
+			     1px 1px 0 #000492;
 		}
 
 		.subtitle {
 			color: #ccc;
+			text-shadow:    
+				-1px -1px 0 #000492,  
+			    1px -1px 0 #000492,
+			    -1px 1px 0 #000492,
+			     1px 1px 0 #000492;
 		}
 
 		&:after {

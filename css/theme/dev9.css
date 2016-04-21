@@ -3,13 +3,13 @@
  *
  * By Veronica Canterbury, vimcat.com
  */
-@import url(https://fonts.googleapis.com/css?family=Poppins);
+@import url(https://fonts.googleapis.com/css?family=Nunito);
 section.has-dark-background, section.has-dark-background h1, section.has-dark-background h2, section.has-dark-background h3, section.has-dark-background h4, section.has-dark-background h5, section.has-dark-background h6 {
   color: #fff; }
 
 section {
   text-align: left;
-  height: 80%; }
+  height: 100%; }
   section:before {
     display: block;
     position: absolute;
@@ -53,20 +53,21 @@ li {
 html.cover-page body {
   background: url("../../images/cover-background.svg");
   background-position: left;
-  background-size: contain; }
-  html.cover-page body section {
-    left: -25%; }
-    html.cover-page body section:before {
-      background: none; }
-    html.cover-page body section .title {
-      color: #fff; }
-    html.cover-page body section .subtitle {
-      color: #ccc; }
-    html.cover-page body section:after {
-      content: '';
-      background: none; }
-    html.cover-page body section h1:after {
-      background: none; }
+  background-size: cover;
+  background-repeat: no-repeat; }
+  html.cover-page body section:before {
+    background: none; }
+  html.cover-page body section .title {
+    color: #fff;
+    text-shadow: -1px -1px 0 #000492,   1px -1px 0 #000492, -1px 1px 0 #000492, 1px 1px 0 #000492; }
+  html.cover-page body section .subtitle {
+    color: #ccc;
+    text-shadow: -1px -1px 0 #000492,   1px -1px 0 #000492, -1px 1px 0 #000492, 1px 1px 0 #000492; }
+  html.cover-page body section:after {
+    content: '';
+    background: none; }
+  html.cover-page body section h1:after {
+    background: none; }
   html.cover-page body:before {
     display: block;
     position: absolute;
@@ -88,7 +89,7 @@ body {
   background-color: #fff; }
 
 .reveal {
-  font-family: "Poppins", sans-serif;
+  font-family: "Nunito", sans-serif;
   font-size: 38px;
   font-weight: normal;
   color: #000; }
@@ -114,7 +115,7 @@ body {
 .reveal h6 {
   margin: 0 0 20px 0;
   color: #4a86e8;
-  font-family: "Poppins", sans-serif;
+  font-family: "Nunito", sans-serif;
   font-weight: 600;
   line-height: 1.2;
   letter-spacing: normal;
