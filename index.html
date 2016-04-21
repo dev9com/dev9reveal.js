@@ -25,38 +25,75 @@
 		<div class="reveal">
 			<div class="slides">
 				<section data-state="cover-page" data-background="../images/cover-background.svg">
-					<h1 class="title">Cover Page Title</h1>
-					<h4 class="subtitle">Cover Page Subtitle</h4>
+					<h1 class="title">Presentation Title</h1>
+					<h4 class="subtitle">With a Subtitle</h4>
 				</section>
 				<section>
-					<h1><span>Awesome Title Here</span></h1>
-					<ul>
-						<li>
-							<span>Point</span>
-							<ul>
-								<li>
-									<span>Second Level</span>
-									<ul>
-										<li>
-											<span>Third level</span>
-											<ul>
-												<li>
-													<span>Fourth level</span>
-													<ul>
-														<li>
-															<span>Fifth level</span>
-														</li>
-													</ul>
-												</li>
-											</ul>
-										</li>
-									</ul>
-								</li>
-							</ul>
-						</li>
-						<li><span>Point 2</span></li>
-						<li><span>Point 3</span></li>
-					</ul>
+					<section>
+						<h2><span>Slide #1</span></h2>
+						<ul>
+							<li>
+								<span>Point</span>
+								<ul>
+									<li>
+										<span>Second Level</span>
+										<ul>
+											<li>
+												<span>Third level</span>
+												<ul>
+													<li>
+														<span>Fourth level</span>
+														<ul>
+															<li>
+																<span>Fifth level</span>
+															</li>
+														</ul>
+													</li>
+												</ul>
+											</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+							<li><span>Point 2</span></li>
+							<li><span>Point 3</span></li>
+
+						</ul>
+					    <aside class="notes">
+					        Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you open the speaker notes window (hit 's' on your keyboard).
+					    </aside>
+					</section>
+					<section>
+						<h2><span>Slide #2</span></h2>
+						<ul>
+							<li><span>Point</span></li>
+							<li><span>Point 2</span></li>
+						</ul>
+					</section>
+				</section>
+				<section data-markdown>
+					    <script type="text/template">
+## Page title
+
+A paragraph with some text and a [link](http://hakim.se).
+
+```javascript
+var str: String = "String Here";
+System.out.println(str);
+// this is a comment
+	```
+
+* <span>First</span>
+* <span>Second</span>
+	* <span>Second + 1</span>
+
+				    </script>
+				</section>
+				<section data-markdown="slide-4.md"  
+				         data-separator="^\n\n\n"  
+				         data-separator-vertical="^\n\n"  
+				         data-separator-notes="^Note:"  
+				         data-charset="iso-8859-15">
 				</section>
 			</div>
 		</div>
