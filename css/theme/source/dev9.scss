@@ -82,6 +82,13 @@ section {
 	    transform: rotate(-180deg);
 	    display: block;
 	}
+
+	section {
+		&:after, &:before {
+			background: none;
+			content: '';
+		}
+	}
 }
 
 ul ul {

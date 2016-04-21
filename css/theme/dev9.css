@@ -41,6 +41,9 @@ section {
     height: 2px;
     transform: rotate(-180deg);
     display: block; }
+  section section:after, section section:before {
+    background: none;
+    content: ''; }
 
 ul ul {
   list-style-type: disc !important; }
