@@ -32,21 +32,22 @@
 					<section alt="Speaker">
 						<h2>Introductions</h2>
 						<h4>Mike Ensor</h4>
-							<div style="float:right;display:inline;width:30%">
+							<div class="left-70-slide">
+								Developer, architect, craftsman with experience in delivering high scale software in consulting and product companies, with a heavy emphasis on CI/CD and TDD
+							</div>
+							<div class="right-30-slide">
 								<img src="https://s.gravatar.com/avatar/d27fbb4a810ea2a967bbb4fd0e0aa3e2?s=210"/>
 								<small>National Practice Director</small>
 							</div>
-							<div style="float:left;display:inline;width:70%;">
-								Developer, architect, craftsman with experience in delivering high scale software in consulting and product companies, with a heavy emphasis on CI/CD and TDD
-							</div>
 
+							<div style="clear:both;"></div>
 					</section>
 					<section alt="Who is dev9">
 						<h2>Who is Dev9</h2>
 						<p>
 							We build software using methods &amp; tools which makes custom software delivery <u>predictable</u>, providing <u>transparency</u> with a high level of <u>automation</u> dramatically improving cost of ownership.
 						</p>
-						<div class="center">
+						<div style="text-align: center;">
 							<blockquote>
 								<p>Experienced at mission critical, high performance solutions.</p>
 							</blockquote>
@@ -55,7 +56,7 @@
 
 					<section alt="Client List">
 						<h2>Dev9 Clients</h2>
-						<div class="center">
+						<div style="text-align:center;">
 							<img src="../images/ClientList-2016.png" alt="Client List" class="no-border" />
 						</div>
 					</section>
@@ -123,8 +124,25 @@
 					<section>
 						<h2>Components</h2>
 						<p>
-							...Spout<br/>
-							...Bolt<br/>
+							...Spout - definition (emits tuples)<br/>
+							...Bolt - takes in tuples, does work, emits tuples according to streams<br/>
+						</p>
+					</section>
+
+					<section>
+						<h2>Spouts</h2>
+						<p>
+							...Spout - --- Things like acknowledging <br/>
+							...Decide if it is a "at most once", "at least once", "exactly once" (not possible)<br/>
+							...Retry capabilities
+						</p>
+					</section>
+
+					<section>
+						<h2>Bolts</h2>
+						<p>
+							...Bolt - Rich vs Basic bolt<br/>
+							...Think of them like lambda functions (no side effects, same input produces same output), focus on idempotent functionality
 						</p>
 					</section>
 
@@ -144,10 +162,15 @@
 
 					<section>
 						<h2>Apache Storm Infrastructure</h2>
-						<p>
+						<div class="left-50-slide">
 							...Nodes (Master &amp; Worker)<br/>
-							...Zookeeper<br/>
-						</p>
+							...Apache Zookeeper<br/>
+							...IMG Zookeeper Node --<br/>
+						</div>
+						<div class="right-50-slide">
+							<img src="../images/apache-storm-architecture.png"/>
+						</div>
+						<div style="clear:both;"></div>
 					</section>
 
 					<section>
@@ -155,7 +178,7 @@
 						<p>
 							Master - Daemon called Nimbus<br/>
 							Worker - Daemon called Supervisor<br/>
-							...IMG Zookeeper Node --
+							
 						</p>
 					</section>
 
@@ -171,6 +194,25 @@
 				</section>
 
 
+
+				<section alt="Best Practices">
+					<section>
+						<h2>Best Practices &amp; Lessons Learned</h2>
+						<p>
+							...Immutability and carry state<br/>
+							...In-flight encryption difficult, used overrode using customizations to the bolt<br/>
+							...always plan for serialization<br/> (use @Functional)
+						</p>
+					</section>
+					<section>
+						<h2>Gotchas</h2>
+						<p>
+						</p>
+					</section>
+
+				</section>
+
+
 				<section alt="Comparisons">
 					<h2>Comparisons</h2>
 					<p>
@@ -178,7 +220,6 @@
 						...Trident<br/>
 						...Spark<br/>
 						...AWS Kinesis Streams<br/>
-						...Apache Kafka<br/>
 					</p>
 				</section>
 
@@ -196,6 +237,11 @@
 
 						</p>
 					</section>
+				</section>
+
+				<section>
+					<h2>Thank you</h2>
+					<h4>Questions/Comments?</h4>
 				</section>
 
 
