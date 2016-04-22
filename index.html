@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+		<title>High-scale Stream Processing with Apache Storm</title>
 
 		<link rel="stylesheet" href="css/reveal.css">
 		<link rel="stylesheet" href="css/theme/dev9.css">
@@ -24,77 +24,181 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section data-state="cover-page" data-background="../images/cover-background.svg">
-					<h1 class="title">Presentation Title</h1>
-					<h4 class="subtitle">With a Subtitle</h4>
+				<section data-state="cover-page" id="cover-page" data-background="../images/cover-background.svg">
+					<h1 class="title">High-scale Stream Processing</h1>
+					<h4 class="subtitle">with Apache Storm</h4>
+				</section>
+				<section>
+					<section alt="Speaker">
+						<h2>Introductions</h2>
+						<h4>Mike Ensor</h4>
+							<div style="float:right;display:inline;width:30%">
+								<img src="https://s.gravatar.com/avatar/d27fbb4a810ea2a967bbb4fd0e0aa3e2?s=210"/>
+								<small>National Practice Director</small>
+							</div>
+							<div style="float:left;display:inline;width:70%;">
+								Developer, architect, craftsman with experience in delivering high scale software in consulting and product companies, with a heavy emphasis on CI/CD and TDD
+							</div>
+
+					</section>
+					<section alt="Who is dev9">
+						<h2>Who is Dev9</h2>
+						<p>
+							We build software using methods &amp; tools which makes custom software delivery <u>predictable</u>, providing <u>transparency</u> with a high level of <u>automation</u> dramatically improving cost of ownership.
+						</p>
+						<div class="center">
+							<blockquote>
+								<p>Experienced at mission critical, high performance solutions.</p>
+							</blockquote>
+						</div>
+					</section>
+
+					<section alt="Client List">
+						<h2>Dev9 Clients</h2>
+						<div class="center">
+							<img src="../images/ClientList-2016.png" alt="Client List" class="no-border" />
+						</div>
+					</section>
+
+				</section>
+
+
+				<section alt="Agenda">
+					<h2>Agenda</h2>
+					<ul>
+						<li><span>What is stream processing?</span></li>
+						<li><span>Storm Concepts &amp; Components</span></li>
+						<li><span>Design Principles</span></li>
+						<li><span>Best Practices &amp; Lessons Learned</span></li>
+						<li><span>Comparison</span></li>
+						<li><span>Practical Examples</span></li>
+					</ul>
+				</section>
+
+
+				<section alt="what is stream processing">
+					<h2>What is stream processing?</h2>
+					<p>
+						...definition<br/>
+						...Event vs Batch<br/>
+						...practical use cases<br/>
+						...dev9's experience
+					</p>
+				</section>
+
+				<section alt="Apache Storm Overview">
+
+					<section>
+						<h2>Apache Storm Introduction</h2>
+						<p>
+							...brief history<br/>
+							...Can be used with many programming languages<br/>
+							...Scales to real-time processing for millions of tuples processed per second per node
+							...some companies who use Storm<br/>
+							Use cases:  real-time analytics, continuous computation, event processing, IoT, etc
+						</p>
+					</section>
 				</section>
 				<section>
 					<section>
-						<h2><span>Slide #1</span></h2>
-						<ul>
-							<li>
-								<span>Point</span>
-								<ul>
-									<li>
-										<span>Second Level</span>
-										<ul>
-											<li>
-												<span>Third level</span>
-												<ul>
-													<li>
-														<span>Fourth level</span>
-														<ul>
-															<li>
-																<span>Fifth level</span>
-															</li>
-														</ul>
-													</li>
-												</ul>
-											</li>
-										</ul>
-									</li>
-								</ul>
-							</li>
-							<li><span>Point 2</span></li>
-							<li><span>Point 3</span></li>
-
-						</ul>
-					    <aside class="notes">
-					        Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you open the speaker notes window (hit 's' on your keyboard).
-					    </aside>
+						<h2>Apache Storm Concepts</h2>
+						<p>
+							...Topology<br/>
+							...Tuples - Ordered list of values<br/>
+							...Components<br/>
+							...Streams<br/>
+							...Stream Groups<br/>
+						</p>
 					</section>
 					<section>
-						<h2><span>Slide #2</span></h2>
-						<ul>
-							<li><span>Point</span></li>
-							<li><span>Point 2</span></li>
-						</ul>
+						<h2>Topologies</h2>
+						<p>
+							DAG<br/>
+							Nodes and Edges<br/>
+							## Insert Diagram showing node-tree ##<br/>
+							...Tuple - Ordered list of values<br/>
+						</p>
+					</section>
+
+					<section>
+						<h2>Components</h2>
+						<p>
+							...Spout<br/>
+							...Bolt<br/>
+						</p>
+					</section>
+
+					<section>
+						<h2>Streams &amp; Stream Groups</h2>
+						<p>
+							...What is a stream? - output is "emitting" tuples<br/>
+							...Group - defines how tuples are sent between spouts and bolts<br/>
+								... Shuffle Grouping
+								... Fields Grouping
+						</p>
+					</section>
+
+				</section>
+
+				<section>
+
+					<section>
+						<h2>Apache Storm Infrastructure</h2>
+						<p>
+							...Nodes (Master &amp; Worker)<br/>
+							...Zookeeper<br/>
+						</p>
+					</section>
+
+					<section>
+						<h2>Nodes</h2>
+						<p>
+							Master - Daemon called Nimbus<br/>
+							Worker - Daemon called Supervisor<br/>
+							...IMG Zookeeper Node --
+						</p>
+					</section>
+
+				</section>
+
+
+				<section alt="Design Principles">
+					<h2>Design Principles</h2>
+					<p>
+						...Fault tolerant<br/>
+						...Durable message source<br/>
+					</p>
+				</section>
+
+
+				<section alt="Comparisons">
+					<h2>Comparisons</h2>
+					<p>
+						(most are batch based...micro-batched) <br/>
+						...Trident<br/>
+						...Spark<br/>
+						...AWS Kinesis Streams<br/>
+						...Apache Kafka<br/>
+					</p>
+				</section>
+
+				<section alt="Examples">
+					<section>
+						<h2>Simple Example</h2>
+						<p>
+
+						</p>
+					</section>
+
+					<section alt="Complex Example">
+						<h2>Complex Example</h2>
+						<p>
+
+						</p>
 					</section>
 				</section>
-				<section data-markdown>
-					    <script type="text/template">
-## Page title
 
-A paragraph with some text and a [link](http://hakim.se).
 
-```javascript
-var str: String = "String Here";
-System.out.println(str);
-// this is a comment
-	```
-
-* <span>First</span>
-* <span>Second</span>
-	* <span>Second + 1</span>
-
-				    </script>
-				</section>
-				<section data-markdown="slide-4.md"  
-				         data-separator="^\n\n\n"  
-				         data-separator-vertical="^\n\n"  
-				         data-separator-notes="^Note:"  
-				         data-charset="iso-8859-15">
-				</section>
 			</div>
 		</div>
 

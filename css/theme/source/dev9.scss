@@ -157,6 +157,43 @@ html.cover-page body {
 	}
 }
 
+
+
+.reveal {
+
+	section {
+		img.no-border {
+			border: 0px;
+			box-shadow:none;
+		}		
+	}
+
+	u {
+		color:#69BE28;
+		font-style: oblique;
+		font-weight: 800;
+	}
+
+	blockquote {
+	    margin : 0 20px;
+	    padding: 10px 20px 25px 20px;
+	    font-weight:bold;
+	    color : #90918c;
+	    border: 5px dashed #fff;
+	}
+
+	blockquote p {
+	    margin: 0;
+	    padding-top:10px;
+	}
+
+}
+
+ 
+div.center {
+	text-align:center;
+}
+
 // Theme template ------------------------------
 @import "../template/theme";
 // ---------------------------------------------
