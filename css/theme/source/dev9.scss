@@ -172,7 +172,7 @@ html.cover-page body {
 }
 
 .left-70-slide {
-	display:inline; float:left; width:70%;
+	display:inline; float:left; width:50%;
 }
 
 .reveal {
@@ -190,12 +190,17 @@ html.cover-page body {
 		font-weight: 800;
 	}
 
-	blockquote {
-	    margin : 0 20px;
+	blockquote { 
+	    margin : 0 10px;
 	    padding: 10px 20px 25px 20px;
 	    font-weight:bold;
 	    color : #90918c;
 	    border: 5px dashed #fff;
+	    width: 85% !important;
+	}
+
+	blockquote.small {
+		width: 70% !important
 	}
 
 	blockquote p {
@@ -205,6 +210,14 @@ html.cover-page body {
 
 }
 
+/*********************************************
+ * TAGCLOUD
+ *********************************************/
+span.clouditem {
+  padding-left: 0.15em;
+  padding-right: 0.15em;
+  line-height: 90%;
+}
 
 // Theme template ------------------------------
 @import "../template/theme";

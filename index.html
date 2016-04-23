@@ -48,7 +48,7 @@
 							We build software using methods &amp; tools which makes custom software delivery <u>predictable</u>, providing <u>transparency</u> with a high level of <u>automation</u> dramatically improving cost of ownership.
 						</p>
 						<div style="text-align: center;">
-							<blockquote>
+							<blockquote class="small">
 								<p>Experienced at mission critical, high performance solutions.</p>
 							</blockquote>
 						</div>
@@ -76,15 +76,46 @@
 					</ul>
 				</section>
 
+				<section alt="what is event stream processing?">
+			        <section>
+						<h2>What is stream processing?</h2>
+						<blockquote>
+							<p>
+								Stream processing is a computer programming paradigm, equivalent to dataflow programming and reactive programming, that allows some applications to more easily exploit a limited form of parallel processing. -- Wikipedia
+							</p>
+						</blockquote>
+						<div style="text-align: center;padding-top:25px;">
+							<img src="../images/event-stream-processing.png" class="no-border" style="width:65%; height:auto;"/>
+						</div>
+			        </section>
 
-				<section alt="what is stream processing">
-					<h2>What is stream processing?</h2>
-					<p>
-						...definition<br/>
-						...Event vs Batch<br/>
-						...practical use cases<br/>
-						...dev9's experience
-					</p>
+			        <section tagcloud large>
+			        	<h2>Common Uses</h2>
+			        	Log Aggregation
+			        	Security Access Failures
+			        	Task Processing
+			        	Analytics
+			        	Real-time Traffic Analytics
+			        	Response to Failures
+			        	DSP
+			        	Real-time Quality Rating
+			        	Predictive Analysis
+						IoT
+			        	Infrastructure Performance
+			        	QoS monitoring
+			        	SIM card misuse
+			        	Metrics
+			        	Intrusion Attacks
+			        	Parallel Processing
+					 </section>
+
+			        <section data-markdown="markdown/stream-processing.md"  
+				         data-separator="^\n\n\n"  
+				         data-separator-vertical="^\n\n\n"  
+				         data-separator-notes="^Note:"  
+				         data-charset="utf-8">
+			        </section>
+
 				</section>
 
 				<section alt="Apache Storm Overview">
@@ -220,6 +251,7 @@
 						...Trident<br/>
 						...Spark<br/>
 						...AWS Kinesis Streams<br/>
+						...Apache Samza<br/>
 					</p>
 				</section>
 
@@ -261,7 +293,8 @@
 					{ src: 'plugin/markdown/marked.js' },
 					{ src: 'plugin/markdown/markdown.js' },
 					{ src: 'plugin/notes/notes.js', async: true },
-					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/tagcloud/tagcloud.js', async: false } 
 				]
 			});
 		</script>
