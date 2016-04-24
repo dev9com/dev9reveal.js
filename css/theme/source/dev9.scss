@@ -83,6 +83,7 @@ section {
 	    height: 2px;
 	    transform: rotate(-180deg);
 	    display: block;
+	    padding-bottom:0.3em;
 	}
 
 	section {
@@ -101,6 +102,12 @@ li {
 	color: orange;
 	span {
 		color: #000;
+	}
+	dl {
+		color: #000;
+	}
+	dt {
+		font-style: italic !important;
 	}
 }
 
@@ -158,24 +165,48 @@ html.cover-page body {
 }
 
 
-
-.right-50-slide {
-	display:inline; float:right; width:50%;
-}
+// Slide Columns
 
 .left-50-slide {
-	display:inline; float:left; width:50%;
+	display:inline; float:left; width:48%;height:100%;
 }
 
-.right-30-slide {
-	display:inline; float:right; width:30%;
+.right-50-slide {
+	display:inline; float:right; width:48%;height:100%;
 }
+
+
 
 .left-70-slide {
-	display:inline; float:left; width:50%;
+	display:inline; float:left; width:68%;
 }
 
+.right-70-slide {
+	display:inline; float:right; width:68%;
+}
+
+
+.right-30-slide {
+	display:inline; float:right; width:27%;
+}
+
+.left-30-slide {
+	display:inline; float:left; width:27%;
+}
+
+div.clear {
+	clear:both;
+}
+
+
 .reveal {
+
+	pre {
+		code  {
+			font-size: 0.70em;
+			max-height: 50em;
+		}
+	}
 
 	section {
 		img.no-border {

@@ -40,7 +40,7 @@
 								<small>National Practice Director</small>
 							</div>
 
-							<div style="clear:both;"></div>
+							<div class="clear"></div>
 					</section>
 					<section alt="Who is dev9">
 						<h2>Who is Dev9</h2>
@@ -106,6 +106,7 @@
 			        	SIM card misuse
 			        	Metrics
 			        	Intrusion Attacks
+			        	Continuous Computation
 			        	Parallel Processing
 					 </section>
 
@@ -122,34 +123,65 @@
 
 					<section>
 						<h2>Apache Storm Introduction</h2>
-						<p>
-							...brief history<br/>
-							...Can be used with many programming languages<br/>
-							...Scales to real-time processing for millions of tuples processed per second per node
-							...some companies who use Storm<br/>
-							Use cases:  real-time analytics, continuous computation, event processing, IoT, etc
-						</p>
+
+
+							<div class="left-50-slide">
+								<ul>
+									<li><span>Apache Storm is a distributed computation framework written predominantly in the Clojure programming language.  Created by Nathan Marz</span></li>
+									<li><span>Can be used with many programming languages</span></li>
+									<li><span>Scales to real-time processing for millions of tuples processed per second per node</span></li>
+								</ul>
+							</div>
+							<div class="right-50-slide">
+								<img src="../images/companies-using-storm.png" class="no-border" style="padding-top:2em;"/>
+							</div>
+
+							<div class="clear"></div>
 					</section>
 				</section>
 				<section>
 					<section>
 						<h2>Apache Storm Concepts</h2>
-						<p>
-							...Topology<br/>
-							...Tuples - Ordered list of values<br/>
-							...Components<br/>
-							...Streams<br/>
-							...Stream Groups<br/>
-						</p>
+						<dl>
+							<dt>Topology</dt><dd>Schematic description of the arrangement of nodes and edges (bolts and stream groupings)</dd>
+							<dt>Tuples</dt><dd>Ordered list of values</dd>
+							<dt>Core Components</dt><dd>Storm core objects: Spouts and Bolts</dd>
+							<dt>Streams</dt><dd>Unbounded sequence of tuples between nodes in the topology</dd>
+							<dt>Stream Groups</dt><dd>Defines how streams should be partitioned among the bolt's tasks</dd>
+						</dl>
 					</section>
+
 					<section>
 						<h2>Topologies</h2>
-						<p>
-							DAG<br/>
-							Nodes and Edges<br/>
-							## Insert Diagram showing node-tree ##<br/>
-							...Tuple - Ordered list of values<br/>
-						</p>
+						<div class="left-50-slide">
+							<ul>
+								<li><span>Logical DAG</span></li>
+								<li><span>Consists of Nodes and Edges</span></li>
+								<li><span>Java based</span></li>
+							</ul>
+							<img src="../images/storm-dag-example.png" alt="Storm DAG Example" class="no-border"/>
+						</div>
+						<div class="right-50-slide">
+						    <pre><code data-trim>
+TopologyBuilder builder = new TopologyBuilder();
+
+// Set Spout (input)
+builder.setSpout("spout", new RandomSentenceSpout(), 5);
+
+// Set Bolt "split" to read from "spout"
+builder.setBolt("split", new SplitSentence(), 8)
+    .shuffleGrouping("spout");
+
+builder.setBolt("count", new WordCount(), 12)
+    .fieldsGrouping("split", new Fields("word"));
+
+Config conf = new Config();
+LocalCluster c = new LocalCluster();
+c.submitTopology("word-count", conf, builder.createTopology());
+
+						    </code></pre>
+						</div>
+						<div class="clear"></div>
 					</section>
 
 					<section>
@@ -184,6 +216,9 @@
 							...Group - defines how tuples are sent between spouts and bolts<br/>
 								... Shuffle Grouping
 								... Fields Grouping
+								... All grouping
+								... Global grouping
+								... Direct grouping
 						</p>
 					</section>
 
@@ -201,7 +236,7 @@
 						<div class="right-50-slide">
 							<img src="../images/apache-storm-architecture.png"/>
 						</div>
-						<div style="clear:both;"></div>
+						<div class="clear"></div>
 					</section>
 
 					<section>
@@ -292,6 +327,7 @@
 				dependencies: [
 					{ src: 'plugin/markdown/marked.js' },
 					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
 					{ src: 'plugin/notes/notes.js', async: true },
 					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
 					{ src: 'plugin/tagcloud/tagcloud.js', async: false } 
