@@ -147,6 +147,11 @@ div.center-contents {
   border: 0px;
   box-shadow: none; }
 
+.reveal section img.full-size {
+  max-width: inherit;
+  max-height: 100%;
+  padding-right: 1em; }
+
 .reveal u {
   color: #69BE28;
   font-style: oblique;

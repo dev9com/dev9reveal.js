@@ -232,7 +232,13 @@ div.center-contents {
 		img.no-border {
 			border: 0px;
 			box-shadow:none;
-		}		
+		}
+
+		img.full-size {
+			max-width:inherit;
+			max-height:100%;
+			padding-right:1em;
+		}
 	}
 
 	u {

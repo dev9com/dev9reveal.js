@@ -338,31 +338,27 @@ public class DoubleAndTripleBolt extends BaseRichBolt {
 
 					<section>
 						<h2>Streams &amp; Stream Groups</h2>
-						<ul>
-							<li><span>Stream Groups &ndash; defines how tuples are sent between spouts and bolts</span></li>
-							<li><span>Topology edges represent streams</span></li>
-							<li class="no-bullet">
-								<ul>
-									<li><span>Shuffle Grouping &ndash; Randomized round-robin</span></li>
-									<li><span>Local Grouping &ndash; Shuffle with preference to local task</span></li>
-									<li><span>Fields Grouping &ndash; Ensure all tuples with same value route to same task</span></li>
-									<li><span>All Grouping &ndash; </span></li>
-									<li><span>Global Grouping &ndash; </span></li>
-									<li><span>Direct Grouping &ndash; </span></li>
-								</ul>
-							</li>
-						</ul>
+						<div class="left-70-slide">
+							<ul>
+								<li><span>Stream Groups &ndash; defines how tuples are sent between spouts and bolts</span></li>
+								<li><span>Tasks represent single instance of bolt</span></li>
+								<li class="no-bullet">
+									<ul>
+										<li><span>Shuffle Grouping &ndash; Randomized round-robin task assignment</span></li>
+										<li><span>Local Grouping &ndash; Shuffle with preference to local bolt task</span></li>
+										<li><span>Fields Grouping &ndash; Ensure all tuples with same value route to same task</span></li>
+										<li><span>All Grouping &ndash; Tuples emitted to all bolt's tasks</span></li>
+										<li><span>Global Grouping &ndash; Stream goes to a single bolt task</span></li>
+										<li><span>Direct Grouping &ndash; Direct link to specific bolt task</span></li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+						<div class="right-30-slide" style="margin-right:1em;">
+							<img src="../images/worker-executor-diagram.png" class="no-border full-size"/>
+						</div>
+						<div class="clear"></div>
 					</section>
-
-
-
-
-
-
-
-
-
-
 
 				</section>
 
