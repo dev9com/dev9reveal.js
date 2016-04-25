@@ -6,6 +6,9 @@
 
 		<title>High-scale Stream Processing with Apache Storm</title>
 
+		<link rel="icon" href="images/favicon.png"/>
+		<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+
 		<link rel="stylesheet" href="css/reveal.css">
 		<link rel="stylesheet" href="css/theme/dev9.css">
 
@@ -20,6 +23,7 @@
 			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
 			document.getElementsByTagName( 'head' )[0].appendChild( link );
 		</script>
+
 	</head>
 	<body>
 		<div class="reveal">
@@ -49,7 +53,7 @@
 						</p>
 						<div style="text-align: center;">
 							<blockquote class="small">
-								<p>Experienced at mission critical, high performance solutions.</p>
+								"Experienced at mission critical, high performance solutions."
 							</blockquote>
 						</div>
 					</section>
@@ -120,55 +124,63 @@
 				</section>
 
 				<section alt="Apache Storm Overview">
-
 					<section>
 						<h2>Apache Storm Introduction</h2>
-
-
 							<div class="left-50-slide">
 								<ul>
-									<li><span>Apache Storm is a distributed computation framework written predominantly in the Clojure programming language.  Created by Nathan Marz</span></li>
-									<li><span>Can be used with many programming languages</span></li>
-									<li><span>Scales to real-time processing for millions of tuples processed per second per node</span></li>
+									<li><span>Distributed computation framework written in Clojure by Nathan Marz @ Twitter</span></li>
+									<li><span>Fault Tolerant and Reliable</span></li>
+									<li><span>API access over many programming languages</span></li>
+									<li><span>Auto-scaling of real-time processing for <strong><em>millions of tuples</em></strong> processed per second per node</span></li>
 								</ul>
 							</div>
 							<div class="right-50-slide">
 								<img src="../images/companies-using-storm.png" class="no-border" style="padding-top:2em;"/>
 							</div>
-
 							<div class="clear"></div>
 					</section>
 				</section>
 				<section>
 					<section>
 						<h2>Apache Storm Concepts</h2>
-						<dl>
-							<dt>Topology</dt><dd>Schematic description of the arrangement of nodes and edges (bolts and stream groupings)</dd>
-							<dt>Tuples</dt><dd>Ordered list of values</dd>
-							<dt>Core Components</dt><dd>Storm core objects: Spouts and Bolts</dd>
-							<dt>Streams</dt><dd>Unbounded sequence of tuples between nodes in the topology</dd>
-							<dt>Stream Groups</dt><dd>Defines how streams should be partitioned among the bolt's tasks</dd>
-						</dl>
+						<div class="left-70-slideXXXXXX">
+							<dl>
+								<dt>Topology</dt><dd>Schematic description of the arrangement of nodes and edges</dd>
+								<dt>Tuples</dt><dd>Ordered list of values</dd>
+								<dt>Streams</dt><dd>Unbounded sequence of tuples between nodes in the topology</dd>
+								<dt>Core Components</dt><dd>Storm core objects called "Tasks": Spouts and Bolts</dd>
+								<dt>Stream Groups</dt><dd>Defines how streams should be partitioned among the bolt's tasks</dd>
+							</dl>
+						</div>
+						<div class="right-30-slideXXXXX">
+							<!-- IF I have time, add a quick image for each of the above -->
+						</div>
 					</section>
 
 					<section>
 						<h2>Topologies</h2>
 						<div class="left-50-slide">
 							<ul>
-								<li><span>Logical DAG</span></li>
-								<li><span>Consists of Nodes and Edges</span></li>
-								<li><span>Java based</span></li>
+								<li><span>Directed Acyclic Graph (non-linear)</span></li>
+								<li><span>Consists of Nodes (bolts) and Edges (stream groups)</span></li>
+								<li><span>Processes nodes in parallel across multiple machines</span></li>
+								<li><span>Topologies are Java object graphs</span>
+									<ul>
+										<li><span>Project FLUX provides YAML configuration (still beta)</span></li>
+									</ul>
+								</li>
 							</ul>
-							<img src="../images/storm-dag-example.png" alt="Storm DAG Example" class="no-border"/>
+							<div class="center-contents">
+								<img src="../images/storm-dag-example.png" alt="Storm DAG Example" class="no-border"/>
+								<small>Diagram of example code</small>
+							</div>
 						</div>
 						<div class="right-50-slide">
-						    <pre><code data-trim>
+						    <pre><code data-trim class="java">
 TopologyBuilder builder = new TopologyBuilder();
 
-// Set Spout (input)
 builder.setSpout("spout", new RandomSentenceSpout(), 5);
 
-// Set Bolt "split" to read from "spout"
 builder.setBolt("split", new SplitSentence(), 8)
     .shuffleGrouping("spout");
 
@@ -185,42 +197,172 @@ c.submitTopology("word-count", conf, builder.createTopology());
 					</section>
 
 					<section>
-						<h2>Components</h2>
-						<p>
-							...Spout - definition (emits tuples)<br/>
-							...Bolt - takes in tuples, does work, emits tuples according to streams<br/>
-						</p>
+						<h2>Tasks</h2>
+						<ul>
+							<li><span>Tasks run in parallel on multiple machines</span></li>
+							<li><span>Spout - Reads from a source, emits tuples</span></li>
+							<li><span>Bolt - Takes in tuples, does work, emits tuples according to streams</span></li>
+						</ul>
+						<div class="center-contents">
+							<img src="../images/storm-topology-diagram.png" alt="Storm Topology Example" class="no-border"/><br/>
+							<small>Topology with multiple spouts and bolts</small>
+						</div>
 					</section>
 
 					<section>
 						<h2>Spouts</h2>
-						<p>
-							...Spout - --- Things like acknowledging <br/>
+						<ul>
+							<li><span>Source of streams for topology</span></li>
+							<li><span>Transactional topologies (not-covered)</span></li>
+							<li><span>Primary responsibilities include:</span>
+								<ul>
+									<li><span>Read data from external source</span></li>
+									<li><span>Durability: Acknowledgment to source</span></li>
+									<li><span>Emit tuples to stream group for processing</span></li>
+								</ul>
+							</li>
+							<li><span>Durability</span>
+								<ul>
+									<li><span><code class="java">ack(Object)</code></span></li>
+									<li><span><code class="java">fail(Object)</code></span></li>
+									<li><span>Requires reliable data source</span></li>
+									<li><span>Recommend designing for <strong><u>idempotency</u></strong></span></li>
+								</ul>
+							</li>
+
+						</ul>
+						<!-- 
 							...Decide if it is a "at most once", "at least once", "exactly once" (not possible)<br/>
 							...Retry capabilities
-						</p>
+						-->
 					</section>
+
+			        <section data-markdown><script type="text/template">
+				          ## Spout Interface
+				          ```java
+							 public interface ISpout extends Serializable {
+							        
+							        void open(Map conf, TopologyContext context, SpoutOutputCollector collector);
+							        
+							        void close();
+							        
+							        void activate();
+							        
+							        void deactivate();
+							        
+							        void nextTuple();
+							        
+							        void ack(Object msgId);
+							        
+							        void fail(Object msgId);
+							}
+				          ```
+				          <span class="fragment current-only code-fragment" data-code-focus="3-9">Lifecycle methods &ndash; Methods to manage lifecycle of Spout</span>
+				          <span class="fragment current-only code-fragment" data-code-focus="11-11">Core API &ndash; Topology calls to emit next tuple</span>
+				          <span class="fragment current-only code-fragment" data-code-focus="13-15">Reliability methods &ndash; Used to control acknowledge or retry failure</span>
+				        </script>
+			        </section>
 
 					<section>
 						<h2>Bolts</h2>
-						<p>
-							...Bolt - Rich vs Basic bolt<br/>
-							...Think of them like lambda functions (no side effects, same input produces same output), focus on idempotent functionality
-						</p>
+						<div class="left-50-slide">
+							<p>Takes in tuples, does work and optionally emits tuples to streams</p>
+							<ul>
+								<li><span>Two main objects: <code>BaseRichBolt</code> and <code>BaseBasicBolt</code></span></li>
+								<li><span>Bolts can <code>fail()</code> or <code>ack()</code> tuples in emit outputter</span></li>
+								<li><span>Only state should be infrastructure (i.e. <code>OutputCollector, Context, Configuration</code>)</span></li>
+							</ul>
+						</div>
+						<div class="right-50-slide"><pre><code data-trim class="java" style="min-height:35em;">
+public class DoubleAndTripleBolt extends BaseRichBolt {
+    private OutputCollectorBase collector;
+
+    @Override
+    public void prepare(Map conf, TopologyContext context, OutputCollectorBase collector) {
+        this.collector = collector;
+    }
+
+    @Override
+    public void execute(Tuple input) {
+        int val = input.getInteger(0);        
+        collector.emit(input, new Values(val*2, val*3));
+        collector.ack(input);
+    }
+
+    @Override
+    public void declareOutputFields(OutputFieldsDeclarer declarer) {
+        declarer.declare(new Fields("double", "triple"));
+    }
+}
+						</code></pre>
+							
+						</div>
+						<div class="clear"></div>
 					</section>
+
+			        <section data-markdown><script type="text/template">
+				          ## Bolt Interface
+				          ```java
+							 public interface IBolt extends Serializable {
+							        
+							        void prepare(Map conf, TopologyContext context, OutputCollector collector);
+
+							        void cleanup();
+							        
+							        void execute(Tuple tuple);
+							}
+				          ```
+				          <span class="fragment current-only code-fragment" data-code-focus="3-5">Lifecycle methods &ndash; Methods to manage lifecycle of Bolt</span>
+				          <span class="fragment current-only code-fragment" data-code-focus="7">Core API &ndash; Execute functionality with tuple</span>
+				        </script>
+			        </section>
+
+			        <section data-markdown><script type="text/template">
+				          ## Bolt Output Interface
+				          ```java
+							 public interface IOutputCollector extends IErrorReporter {
+
+							        List<Integer> emit(String streamId, Collection<Tuple> anchors, List<Object> tuples);
+
+							        void emitDirect(int taskId, String streamId, Collection<Tuple> anchors, List<Object> tuples);
+							        
+							        void ack(Tuple tuple);
+
+							        void fail(Tuple tuple);
+							}
+				          ```
+				          <span class="fragment current-only code-fragment" data-code-focus="3-5">Core API &ndash; Communicate with topology to emit tuple</span>
+				          <span class="fragment current-only code-fragment" data-code-focus="7-9">Lifecycle &ndash; Low-level lifecycle of tuples</span>
+				        </script>
+			        </section>
 
 					<section>
 						<h2>Streams &amp; Stream Groups</h2>
-						<p>
-							...What is a stream? - output is "emitting" tuples<br/>
-							...Group - defines how tuples are sent between spouts and bolts<br/>
-								... Shuffle Grouping
-								... Fields Grouping
-								... All grouping
-								... Global grouping
-								... Direct grouping
-						</p>
+						<ul>
+							<li><span>Stream Groups &ndash; defines how tuples are sent between spouts and bolts</span></li>
+							<li><span>Topology edges represent streams</span></li>
+							<li class="no-bullet">
+								<ul>
+									<li><span>Shuffle Grouping &ndash; Randomized round-robin</span></li>
+									<li><span>Local Grouping &ndash; Shuffle with preference to local task</span></li>
+									<li><span>Fields Grouping &ndash; Ensure all tuples with same value route to same task</span></li>
+									<li><span>All Grouping &ndash; </span></li>
+									<li><span>Global Grouping &ndash; </span></li>
+									<li><span>Direct Grouping &ndash; </span></li>
+								</ul>
+							</li>
+						</ul>
 					</section>
+
+
+
+
+
+
+
+
+
+
 
 				</section>
 
@@ -266,6 +408,7 @@ c.submitTopology("word-count", conf, builder.createTopology());
 						<h2>Best Practices &amp; Lessons Learned</h2>
 						<p>
 							...Immutability and carry state<br/>
+							......Keep all processes stateless and share-nothing; store state (with other persistent data) in a  backing service
 							...In-flight encryption difficult, used overrode using customizations to the bolt<br/>
 							...always plan for serialization<br/> (use @Functional)
 						</p>
@@ -330,7 +473,8 @@ c.submitTopology("word-count", conf, builder.createTopology());
 					{ src: 'plugin/zoom-js/zoom.js', async: true },
 					{ src: 'plugin/notes/notes.js', async: true },
 					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-					{ src: 'plugin/tagcloud/tagcloud.js', async: false } 
+					{ src: 'plugin/tagcloud/tagcloud.js', async: false },
+					{ src: 'js/reveal-code-focus.js', async:true, callback: function() { RevealCodeFocus(); } } 
 				]
 			});
 		</script>

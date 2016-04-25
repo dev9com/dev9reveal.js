@@ -4,15 +4,15 @@
     - <span>Real-time</span>
 * <span>**Event Stream** vs **Traditional Parallel Processing**</span>
     - <span>Lack of concurrent control mechanism</span>
-    - <span>Shared state through services</span>
+    - <span>Shared state through dependent services</span>
 
 
 
 ## Recent Dev9 Experience
 * <span>Expedia</span>
     
-    <span>Blah Blah Blah</span>
+    <span>All user browsing statistics, bookings, pricing and amenity changes are published to Kafka and processed by Storm for real-time analysis</span>
 
 * <span>AllClear ID</span>
 
-    <span>Blah Blah Blah</span>
+    <span>Apache storm is used to decouple incoming requests from processing events where the events are high-cost and high latency</span>
