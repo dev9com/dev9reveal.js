@@ -64,6 +64,8 @@ li {
     font-style: italic !important; }
   li li {
     font-size: 0.80em !important; }
+    li li li {
+      font-size: 0.8em !important; }
 
 html.cover-page body {
   background: url("../../images/cover-background.svg");
@@ -171,6 +173,13 @@ div.center-contents {
 .reveal blockquote p {
   margin: 0;
   padding-top: 10px; }
+
+table.descriptions thead {
+  font-weight: bold;
+  color: orange; }
+
+table.descriptions tbody {
+  color: #000; }
 
 /*********************************************
 * RevealCode Focus

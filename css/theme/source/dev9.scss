@@ -118,6 +118,10 @@ li {
 
 	li {
 		font-size: 0.80em !important;
+
+		li {
+			font-size: 0.8em !important;
+		}
 	}
 }
 
@@ -265,6 +269,17 @@ div.center-contents {
 	    padding-top:10px;
 	}
 
+}
+
+table.descriptions {
+	
+	thead {
+		font-weight: bold;
+		color: orange;
+	}
+	tbody {
+		color:#000;
+	}
 }
 
 /*********************************************

@@ -75,8 +75,8 @@
 						<li><span>Storm Concepts &amp; Components</span></li>
 						<li><span>Design Principles</span></li>
 						<li><span>Best Practices &amp; Lessons Learned</span></li>
-						<li><span>Comparison</span></li>
-						<li><span>Practical Examples</span></li>
+						<li><span>Alternatives &amp; Comparisons</span></li>
+						<!-- <li><span>Practical Examples</span></li> -->
 					</ul>
 				</section>
 
@@ -367,59 +367,231 @@ public class DoubleAndTripleBolt extends BaseRichBolt {
 					<section>
 						<h2>Apache Storm Infrastructure</h2>
 						<div class="left-50-slide">
-							...Nodes (Master &amp; Worker)<br/>
-							...Apache Zookeeper<br/>
-							...IMG Zookeeper Node --<br/>
+							<table>
+								<thead>
+									<tr>
+										<th colspan="2">Storm Architecture Components</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><span class="fragment" data-fragment-index="1">Nimbus</span></td>
+										<td><span class="fragment" data-fragment-index="1">Master controller</span></td>
+									</tr>
+									<tr>
+										<td><span class="fragment" data-fragment-index="2">Supervisor</span></td>
+										<td><span class="fragment" data-fragment-index="2">Manages worker processes</span></td>
+									</tr>
+									<tr>
+										<td><span class="fragment" data-fragment-index="3">Worker</span></td>
+										<td><span class="fragment" data-fragment-index="3">JVM Process with multiple threads</span></td>
+									</tr>
+									<tr>
+										<td><span class="fragment" data-fragment-index="4">Zookeeper</span></td>
+										<td><span class="fragment" data-fragment-index="4">Manages cluster of supervisors and holds topology state</span></td>
+									</tr>
+								</tbody>
+							</table>
 						</div>
 						<div class="right-50-slide">
-							<img src="../images/apache-storm-architecture.png"/>
+							<img src="../images/apache-storm-architecture.png" class="no-border"/>
 						</div>
 						<div class="clear"></div>
 					</section>
 
 					<section>
-						<h2>Nodes</h2>
-						<p>
-							Master - Daemon called Nimbus<br/>
-							Worker - Daemon called Supervisor<br/>
+						<h2>What are "Nodes"</h2>
+						<p>Nodes are containers, physical or virtual servers </p>
+						<ul>
+							<li><span>Master Node &ndash; Runs a daemon called "Nimbus"</span>
+								<ul>
+									<li><span>Nimbus is responsible for distributing code around the cluster, assigning tasks to machines, and monitoring for failures</span></li>
+									<li><span>Often runs Storm UI</span></li>
+								</ul>
+							</li>
+							<li><span>Worker Nodes &ndash; Daemon called "Supervisor"</span>
+								<ul>
+									<li><span>Listens for assigned work, starts and stops worker processes as necessary based on assignments from Nimbus</span></li>
+									<li><span>Consists of 1..n JVM worker processes</span></li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Nimbus</h2>
+						<p></p>
+						<ul>
+							<li><span>Distributes code around Storm cluster</span>
+								<ul>
+									<li><span>Handles topology deployments</span></li>
+								</ul>
+							</li>
+							<li><span>Assigns tasks to Supervisors</span></li>
+							<li><span>Failure monitor</span></li>
+							<li><span>Stateless and fail-safe</span>
+								<ul>
+									<li><span>Storm 1.0 release adds HA Nimbus</span></li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+
+					<section>
+						<h2>Zookeeper</h2>
+						<p>A centralized service for maintaining configuration information, naming, providing distributed synchronization, and providing group services.</p>
+						<div class="left-70-slide">
+							<ul>
+								<li><span>Apache Project used by many OSS projects and companies (Fume, Elastic, Box, Rackspace, etc)</span></li>
+								<li><span>Manages cluster of supervisors</span></li>
+								<li><span>Coordinate communication between Nimbus and Supervisors</span></li>
+								<li><span>Transparent to the topology solution</span></li>
+								<li><span>Runs in a n+1 cluster (typically 3)</span></li>
+								<li><span>Manages state for in-process work</span></li>
+							</ul>
+						</div>
+						<div class="right-30-slide center-contents">
+							<img src="../images/zookeeper-logo.jpg" alt="Zookeeper Logo" class="no-border"/>
+						</div>
+						<div class="clear"></div>
+					</section>
+
+					<section>
+						<h2>Supervisors &amp; Workers</h2>
+						<div class="left-50-slide">
+							<p>A node in the Storm architecture that manages workers for the topology.</p>
+							<ul>
+								<li><span>Parallelization with additional workers</span>
+									<ul>
+										<li><span>Parallelization is declarative using "hints"</span></li>
+									</ul>
+								</li>
+								<li><span>Worker is a single JVM process</span></li>
+								<li><span>Workers execute "tasks" (Spouts or Bolts)</span></li>
+								<li><span>Each worker spawns threads for tasks</span></li>
+							</ul>
+						</div>
+						<div class="right-50-slide">
+							<img src="../images/supervisor-diagram.png" class="no-border"/>
+						</div>
+						<div class="clear"></div>
+					</section>
+
+					<section>
+						<h2>Parallelism</h2>
+						<div class="left-50-slide">
+							<p>Parallel processing is declarative and takes explicit values and hints in order to efficiently manage the required load</p>
+							<ul style="font-size:0.8em;">
+								<li><span>Worker count is explicit: <code>config.setNumWorkers(<span style="color:#ff0000;">2</span>);</code></code></span></li>
+								<li><span>Executors are hints <code>topologyBuilder.setSpout("blue-spout", new BlueSpout(), <span style="color:#ff0000;">3</span>);</code></span></li>
+								<li><span>Tasks are hints <code>setNumbTasks(<span style="color:#ff0000;">4</span>);</code></span></li>
+							</ul>
+						</div>
+						<div class="right-50-slide"><pre><code data-trim class="java" style="min-height:35em;">
+Config conf = new Config();
+conf.setNumWorkers(2);
+
+topologyBuilder.setSpout("blue-spout", new BlueSpout(), 2);
+
+topologyBuilder.setBolt("green-bolt", new GreenBolt(), 2)
+               .setNumTasks(4)
+               .shuffleGrouping("blue-spout");
+
+topologyBuilder.setBolt("yellow-bolt", new YellowBolt(), 6)
+               .shuffleGrouping("green-bolt");
+
+StormSubmitter.submitTopology(
+        "mytopology",
+        conf,
+        topologyBuilder.createTopology()
+    );
+						</code></pre>
 							
-						</p>
+						</div>
+						<div class="clear"></div>
 					</section>
 
 				</section>
 
+			<section alt="Design Principles">
+				<section>
+						<h2>Design Principles</h2>
+						<p>Determine if the solution needs to process:</p>
+						<table class="descriptions">
+							<thead>
+								<tr>
+									<td>Requirement</td>
+									<td>Description</td>
+									<td>Notes</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>Exactly Once</td>
+									<td>Tuples are guaranteed to be processed once</td>
+									<td>Difficult, requires state</td>
+								</tr>
+								<tr>
+									<td>At-most Once</td>
+									<td>Not guaranteed to be processed</td>
+									<td>Fast moving data where failures are acceptable</td>
+								</tr>
+								<tr>
+									<td>At-least Once</td>
+									<td>Tuples can be re-played to handle failures</td>
+									<td>Reliable data source required</td>
+								</tr>
+							</tbody>
+						</table>
+					</section>
 
-				<section alt="Design Principles">
-					<h2>Design Principles</h2>
-					<p>
-						...Fault tolerant<br/>
-						...Durable message source<br/>
-					</p>
+					<section>
+						<h2>Design Considerations</h2>
+						<ul>
+							<li><span>Use immutable objects and data containers where possible</span></li>
+							<li><span>Treat bolts as lambda-calculus Functions()</span>
+								<ul>
+									<li><span>Setup topology to be a monad &ndash; A structure that represents computations defined as sequences of steps</span></li>
+									<li><span>Strive for "Pure Functions" &ndash; Returns the same value given the same arguments regardless of the context</span></li>
+								</ul>
+							</li>
+							<li><span>Use "tick" tuples for monitoring &ndash; scheduled synthetic tuples sent to bolts</span>
+								<ul>
+									<li><span>Generate synthetic tuples in addition to ticks for end-to-end metrics</span></li>
+								</ul>
+							</li>
+						</ul>
+					</section>
 				</section>
-
 
 
 				<section alt="Best Practices">
 					<section>
-						<h2>Best Practices &amp; Lessons Learned</h2>
-						<p>
-							...Immutability and carry state<br/>
-							......Keep all processes stateless and share-nothing; store state (with other persistent data) in a  backing service
-							...In-flight encryption difficult, used overrode using customizations to the bolt<br/>
-							...always plan for serialization<br/> (use @Functional)
-						</p>
+						<h2>Lessons Learned</h2>
+						<ul>
+							<li><span>Carry state through topology, async store state</span></li>
+							<li><span>Do not keep application state in tasks</span></li>
+							<li><span>Encryption can be done in bolts</span></li>
+						</ul>
 					</section>
 					<section>
 						<h2>Gotchas</h2>
-						<p>
-						</p>
+						<ul>
+							<li><span>Plan for serialization</span>
+								<ul>
+									<li><span>Use Java8 @Functional as a SerializableFactory to create new instances of an object rather than serialized objects</span></li>
+								</ul>
+							</li>
+							<li><span>Practice deployments via command-line</span></li>
+							<li><span>Use Storm UI</span></li>
+						</ul>
 					</section>
 
 				</section>
 
 
-				<section alt="Comparisons">
-					<h2>Comparisons</h2>
+				<section alt="Alternatives &amp; Comparisons">
+					<h2>Alternatives &amp; Comparisons</h2>
 					<p>
 						(most are batch based...micro-batched) <br/>
 						...Trident<br/>
@@ -427,22 +599,6 @@ public class DoubleAndTripleBolt extends BaseRichBolt {
 						...AWS Kinesis Streams<br/>
 						...Apache Samza<br/>
 					</p>
-				</section>
-
-				<section alt="Examples">
-					<section>
-						<h2>Simple Example</h2>
-						<p>
-
-						</p>
-					</section>
-
-					<section alt="Complex Example">
-						<h2>Complex Example</h2>
-						<p>
-
-						</p>
-					</section>
 				</section>
 
 				<section>
