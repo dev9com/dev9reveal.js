@@ -572,6 +572,17 @@ StormSubmitter.submitTopology(
 							<li><span>Carry state through topology, async store state</span></li>
 							<li><span>Do not keep application state in tasks</span></li>
 							<li><span>Encryption can be done in bolts</span></li>
+							<li><span>Use the CLI</span>
+								<ul>
+									<li class="no-bullet"><pre><code class="bash" style="font-size: 1.2em;width: 45em;">## Reconfigure the topology "mytopology" to use 5 worker processes,
+## the spout "blue-spout" to use 3 executors and
+## the bolt "yellow-bolt" to use 10 executors.
+
+storm rebalance mytopology -n 5 -e blue-spout=3 -e yellow-bolt=10
+</code></pre></li>
+								</ul>
+							</li>
+
 						</ul>
 					</section>
 					<section>
@@ -591,14 +602,74 @@ StormSubmitter.submitTopology(
 
 
 				<section alt="Alternatives &amp; Comparisons">
-					<h2>Alternatives &amp; Comparisons</h2>
-					<p>
-						(most are batch based...micro-batched) <br/>
-						...Trident<br/>
-						...Spark<br/>
-						...AWS Kinesis Streams<br/>
-						...Apache Samza<br/>
-					</p>
+					<section>
+						<h2>Alternatives &amp; Comparisons</h2>
+						<small>Disclaimer: Presenter is not an expert in any one tool</small>
+					</section>
+					<section>
+						<h2>Apache Spark</h2>
+						<table>
+							<thead>
+								<tr>
+									<th>Project</th>
+									<th>Description</th>
+									<th>Pluses</th>
+									<th>Difference</th>
+								</tr>
+							</thead>
+							<tbody class="description">
+								<tr alt="Apache Spark">
+									<th>Apache Spark (Streaming)</th>
+									<th>Engine developed specifically for handling large-scale data processing and analytics</th>
+									<th>
+										<ul>
+											<li><span>Replacement for MapReduce</span></li>
+										</ul>
+									</th>
+									<th>
+										<ul>
+											<li><span>Micro-batched vs Stream</span></li>
+											<li><span>Written and implemented (mostly) in Scala</span></li>
+											<li><span>Offers "exactly once" reliability*</span></li>
+										</ul>
+									</th>
+								</tr>
+							</tbody>
+						</table>
+					</section>
+					<section>
+						<h2>Apache Samza</h2>
+						<table>
+							<thead>
+								<tr>
+									<th>Project</th>
+									<th>Description</th>
+									<th>Pluses</th>
+									<th>Difference</th>
+								</tr>
+							</thead>
+							<tbody class="description">
+								<tr alt="Apache Samza">
+									<th>Apache Samza</th>
+									<th>Samza is a distributed stream processing framework primarily used with Hadoop running on YARN and using Kafka.</th>
+									<th>
+										<ul>
+											<li><span>Alternative to Storm or Spark and MapReduce</span></li>
+											<li><span>Stream to Task to Stream</span></li>
+										</ul>
+									</th>
+									<th>
+										<ul>
+											<li><span>Based on messages, not tuples or DStreams</span></li>
+											<li><span>Operates best in a Hadoop infrastructure</span></li>
+											<li><span>Accommodates batch and single stream messages</span></li>
+											<li><span>Not stateless - Embedded Key/Value store</span></li>
+										</ul>
+									</th>
+								</tr>
+							</tbody>
+						</table>
+					</section>
 				</section>
 
 				<section>
