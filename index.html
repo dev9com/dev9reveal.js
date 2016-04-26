@@ -51,7 +51,7 @@
 						<p>
 							We build software using methods &amp; tools which makes custom software delivery <u>predictable</u>, providing <u>transparency</u> with a high level of <u>automation</u> dramatically improving cost of ownership.
 						</p>
-						<div style="text-align: center;">
+						<div class="center-contents">
 							<blockquote class="small">
 								"Experienced at mission critical, high performance solutions."
 							</blockquote>
@@ -60,7 +60,7 @@
 
 					<section alt="Client List">
 						<h2>Dev9 Clients</h2>
-						<div style="text-align:center;">
+						<div class="center-contents">
 							<img src="../images/ClientList-2016.png" alt="Client List" class="no-border" />
 						</div>
 					</section>
@@ -76,7 +76,6 @@
 						<li><span>Design Principles</span></li>
 						<li><span>Best Practices &amp; Lessons Learned</span></li>
 						<li><span>Alternatives &amp; Comparisons</span></li>
-						<!-- <li><span>Practical Examples</span></li> -->
 					</ul>
 				</section>
 
@@ -221,20 +220,16 @@ c.submitTopology("word-count", conf, builder.createTopology());
 									<li><span>Emit tuples to stream group for processing</span></li>
 								</ul>
 							</li>
-							<li><span>Durability</span>
+							<li><span>Reliability</span>
 								<ul>
 									<li><span><code class="java">ack(Object)</code></span></li>
 									<li><span><code class="java">fail(Object)</code></span></li>
 									<li><span>Requires reliable data source</span></li>
+									<li><span>Retry capabilities</span></li>
 									<li><span>Recommend designing for <strong><u>idempotency</u></strong></span></li>
 								</ul>
 							</li>
-
 						</ul>
-						<!-- 
-							...Decide if it is a "at most once", "at least once", "exactly once" (not possible)<br/>
-							...Retry capabilities
-						-->
 					</section>
 
 			        <section data-markdown><script type="text/template">
@@ -375,20 +370,20 @@ public class DoubleAndTripleBolt extends BaseRichBolt {
 								</thead>
 								<tbody>
 									<tr>
-										<td><span class="fragment" data-fragment-index="1">Nimbus</span></td>
-										<td><span class="fragment" data-fragment-index="1">Master controller</span></td>
+										<td><span>Nimbus</span></td>
+										<td><span>Master controller</span></td>
 									</tr>
 									<tr>
-										<td><span class="fragment" data-fragment-index="2">Supervisor</span></td>
-										<td><span class="fragment" data-fragment-index="2">Manages worker processes</span></td>
+										<td><span>Supervisor</span></td>
+										<td><span>Manages worker processes</span></td>
 									</tr>
 									<tr>
-										<td><span class="fragment" data-fragment-index="3">Worker</span></td>
-										<td><span class="fragment" data-fragment-index="3">JVM Process with multiple threads</span></td>
+										<td><span>Worker</span></td>
+										<td><span>JVM Process with multiple threads</span></td>
 									</tr>
 									<tr>
-										<td><span class="fragment" data-fragment-index="4">Zookeeper</span></td>
-										<td><span class="fragment" data-fragment-index="4">Manages cluster of supervisors and holds topology state</span></td>
+										<td><span>Zookeeper</span></td>
+										<td><span>Manages cluster of supervisors and holds topology state</span></td>
 									</tr>
 								</tbody>
 							</table>
@@ -513,38 +508,7 @@ StormSubmitter.submitTopology(
 
 				</section>
 
-			<section alt="Design Principles">
-				<section>
-						<h2>Design Principles</h2>
-						<p>Determine if the solution needs to process:</p>
-						<table class="descriptions">
-							<thead>
-								<tr>
-									<td>Requirement</td>
-									<td>Description</td>
-									<td>Notes</td>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>Exactly Once</td>
-									<td>Tuples are guaranteed to be processed once</td>
-									<td>Difficult, requires state</td>
-								</tr>
-								<tr>
-									<td>At-most Once</td>
-									<td>Not guaranteed to be processed</td>
-									<td>Fast moving data where failures are acceptable</td>
-								</tr>
-								<tr>
-									<td>At-least Once</td>
-									<td>Tuples can be re-played to handle failures</td>
-									<td>Reliable data source required</td>
-								</tr>
-							</tbody>
-						</table>
-					</section>
-
+				<section alt="Design Principles">
 					<section>
 						<h2>Design Considerations</h2>
 						<ul>
@@ -558,10 +522,174 @@ StormSubmitter.submitTopology(
 							<li><span>Use "tick" tuples for monitoring &ndash; scheduled synthetic tuples sent to bolts</span>
 								<ul>
 									<li><span>Generate synthetic tuples in addition to ticks for end-to-end metrics</span></li>
+									<li><span>Tick tuples are not reliable for Time</span></li>
 								</ul>
 							</li>
 						</ul>
 					</section>
+
+<!-- 					<section>
+						<h2>Testing</h2>
+						<ul>
+							<li><span>Storm provides mock Tuple objects for testing</span></li>
+							<li><span>Create a local topology (LocalTopologyRunner) for integration tests</span></li>
+							<li><span> -- </span></li>
+						</ul>
+					</section>
+ -->
+					<section>
+						<h2>Fault Tolerance</h2>
+						<div class="left-70-slide">
+
+							<ul>
+								<li><span>"Guaranteed Message Processing"</span>
+								<li><span>Conditions for fault tolerance</span>
+									<ul>
+										<li><span>A reliable data source with a corresponding reliable spout</span></li>
+										<li><span>Topology that acknowledges each tuple as processed or failed</span></li>
+										<li><span>High availability, fault-tolerant Storm cluster</span></li>
+									</ul>
+								</li>
+								<li><span>Tuple tree created for every emitted tuple</span></li>
+								<li><span>Use BaseRichBolt's <code>ack()</code> and <code>fail()</code> to mark processed tuples</span>
+									<ul>
+										<li><span>Must explicitly emit and mark tuple state</span></li>
+									</ul>
+								</li>
+
+							</ul>
+						</div>
+						<div class="right-30-slide center-contents">
+							<h4>Tuple Tree</h4>
+							<img src="../images/ack_tree.png" alt="Tree" class="no-border"/>
+						</div>
+						<div class="clear"></div>
+					</section>
+
+					<section>
+						<h2>Implementing Fault Tolerance</h2>
+						<div>
+							<ul>
+								<li><span>BaseBasicBolt automatically handles failures by exceptions</span>
+									<ul>
+										<li><span>Throw <code>FailedException()</code> or <code>ReportedFailedException()</code></span></li>
+									</ul>
+								</li>
+								<li><span>BaseRichBolt's <code>ack()</code> and <code>fail()</code> to mark processed tuples</span>
+									<ul>
+										<li><span>Must explicitly emit and mark tuple state</span></li>
+										<li><span>Must ack() or fail() all emitted tuples</span></li>
+									</ul>
+								</li>
+								<li><span>Spouts handles <code>ack(Object object)</code> and <code>fail(Object object)</code> tuple tree responses</span></li>
+							</ul>
+						</div>
+						<div style="margin-top:0.8em;">
+							<table class="descriptions">
+								<thead>
+									<tr>
+										<th>Bolt</th>
+										<th>Type</th>
+										<th>Process</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>BaseBasicBolt</td>
+										<td>Implicit</td>
+										<td>throw exception</td>
+									</tr>
+									<tr>
+										<td>BaseRichBolt</td>
+										<td>Explicit</td>
+										<td>Catch exceptions, explicit call to ack() or fail()</td>
+									</tr>
+								</tbody>
+
+							</table>
+						</div>
+					</section>
+
+					<section>
+						<h2>Degrees of Reliability</h2>
+						<table class="descriptions">
+							<thead>
+								<tr>
+									<td>Requirement</td>
+									<td>Description</td>
+									<td>Notes</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>Exactly Once</td>
+									<td>Tuples are guaranteed to be processed once</td>
+									<td>Difficult, requires bolts to know about previous iterations</td>
+								</tr>
+								<tr>
+									<td>At-most Once</td>
+									<td>Not guaranteed to be processed</td>
+									<td>Fast moving data where failures are acceptable; No-replays on failures</td>
+								</tr>
+								<tr>
+									<td>At-least Once</td>
+									<td>Tuples can be re-played to handle failures</td>
+									<td>Reliable data source required</td>
+								</tr>
+							</tbody>
+						</table>
+					</section>
+
+
+					<section>
+						<h2>Handling Failures</h2>
+						<div class="left-50-slide">
+							<ul>
+								<li><span>Implicit failures = timeouts</span>
+									<ul>
+										<li><span>Message timeout is configurable</span></li>
+									</ul>								
+								</li>
+								<li><span>Anchored vs Unanchored Spouts</span>
+									<ul>
+										<li><span>Unanchored &ndash; Early ack() message source or using an unreliable message source and cannot guarantee message processing</span></li>
+										<li><span>Anchored spouts use a reliable message source such as RabbitMQ or Kafka</span></li>
+									</ul>								
+								</li>
+								<li><span>Spouts role</span>
+									<ul>
+										<li><span>Decide to replay or reject</span></li>
+										<li><span>Anchored spouts can ack() message source</span></li>
+									</ul>
+								</li>
+								<li><span>Catch <code>Exceptions</code> and implement reject logic</span></li>
+							</ul>
+						</div>
+						<div class="right-50-slide">
+							<p></p>
+							<pre><code data-trim class="java">
+/* ...Inside implementation of BasicRichSpout...*/
+
+	@Override
+	public void ack(Object messageId) {
+	    /* Rabbit acknowledge single message */
+	    channel.basicAck(Long) msgId, false);
+	}
+
+	@Override
+	public void fail(Object msgId) {
+	    /* Rabbit fail single message and to re-queue */
+	    channel.basicReject((Long) msgId, true);
+	}
+
+/* ... */
+
+							</code></pre>
+						</div>
+						<div class="clear"></div>
+
+					</section>
+
 				</section>
 
 
@@ -582,7 +710,8 @@ storm rebalance mytopology -n 5 -e blue-spout=3 -e yellow-bolt=10
 </code></pre></li>
 								</ul>
 							</li>
-
+							<li><span>Architect for Event Driven/Reactive solutions</span></li>
+							<li><span>Embrace asynchronous operations</span></li>
 						</ul>
 					</section>
 					<section>
@@ -590,7 +719,7 @@ storm rebalance mytopology -n 5 -e blue-spout=3 -e yellow-bolt=10
 						<ul>
 							<li><span>Plan for serialization</span>
 								<ul>
-									<li><span>Use Java8 @Functional as a SerializableFactory to create new instances of an object rather than serialized objects</span></li>
+									<li><span>Use Java8 <code class="java">@Functional</code> as a SerializableFactory to create new instances of an object rather than serialized objects</span></li>
 								</ul>
 							</li>
 							<li><span>Practice deployments via command-line</span></li>
@@ -673,8 +802,18 @@ storm rebalance mytopology -n 5 -e blue-spout=3 -e yellow-bolt=10
 				</section>
 
 				<section>
-					<h2>Thank you</h2>
-					<h4>Questions/Comments?</h4>
+					<h2>Questions/Comments?</h2>
+					<div class="center-contents">
+						<br/>
+						Mike Ensor<br/>
+						mike.ensor@dev9.com<br/>
+						<br/>
+						Dev9<br/>
+						<a href="#">http://www.dev9.com</a> <br/>
+						<br/>
+						Send us your resume:<br/>
+						<a href="#">recruiting@dev9.com</a>
+					</div>
 				</section>
 
 
