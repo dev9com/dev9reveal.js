@@ -1,4 +1,4 @@
-## Comparative Patterns
+## Comparative Parallel Patterns
 * <span>**Event Stream** vs **Batch Processing**</span>
     - <span>Single item/tuple</span>
     - <span>Real-time</span>

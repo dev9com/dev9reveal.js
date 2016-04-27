@@ -129,8 +129,12 @@
 								<ul>
 									<li><span>Distributed computation framework written in Clojure by Nathan Marz @ Twitter</span></li>
 									<li><span>Fault Tolerant and Reliable</span></li>
-									<li><span>API access over many programming languages</span></li>
-									<li><span>Auto-scaling of real-time processing for <strong><em>millions of tuples</em></strong> processed per second per node</span></li>
+									<li><span>API access over many programming languages</span>
+										<ul>
+											<li><span>Java, Scala, Python, etc.</span></li>
+										</ul>
+									</li>
+									<li><span>Auto-scaling-ish of real-time processing for <strong><em>millions of tuples</em></strong> processed per second per node</span></li>
 								</ul>
 							</div>
 							<div class="right-50-slide">
@@ -161,7 +165,7 @@
 						<div class="left-50-slide">
 							<ul>
 								<li><span>Directed Acyclic Graph (non-linear)</span></li>
-								<li><span>Consists of Nodes (bolts) and Edges (stream groups)</span></li>
+								<li><span>Consists of Nodes (bolts &amp; spouts) and Edges (stream groups)</span></li>
 								<li><span>Processes nodes in parallel across multiple machines</span></li>
 								<li><span>Topologies are Java object graphs</span>
 									<ul>
@@ -695,11 +699,11 @@ StormSubmitter.submitTopology(
 
 				<section alt="Best Practices">
 					<section>
-						<h2>Lessons Learned</h2>
+						<h2>Best Practices &amp; Lessons Learned</h2>
 						<ul>
 							<li><span>Carry state through topology, async store state</span></li>
 							<li><span>Do not keep application state in tasks</span></li>
-							<li><span>Encryption can be done in bolts</span></li>
+							<li><span>Encryption can be implemented in bolts</span></li>
 							<li><span>Use the CLI</span>
 								<ul>
 									<li class="no-bullet"><pre><code class="bash" style="font-size: 1.2em;width: 45em;">## Reconfigure the topology "mytopology" to use 5 worker processes,
@@ -803,17 +807,23 @@ storm rebalance mytopology -n 5 -e blue-spout=3 -e yellow-bolt=10
 
 				<section>
 					<h2>Questions/Comments?</h2>
-					<div class="center-contents">
-						<br/>
-						Mike Ensor<br/>
-						mike.ensor@dev9.com<br/>
-						<br/>
-						Dev9<br/>
-						<a href="#">http://www.dev9.com</a> <br/>
-						<br/>
-						Send us your resume:<br/>
-						<a href="#">recruiting@dev9.com</a>
+					<div class="left-50-slide">
+						<div class="center-contents">
+							<br/>
+							Mike Ensor<br/>
+							mike.ensor@dev9.com<br/>
+							<br/>
+							Dev9<br/>
+							<a href="#">http://www.dev9.com</a> <br/>
+							<br/>
+							Send us your resume:<br/>
+							<a href="#">recruiting@dev9.com</a>
+						</div>
 					</div>
+						<div class="right-30-slide center-contents">
+							<img src="../images/storm-applied-book.jpg" alt="Storm Applied" class="no-border"/>
+						</div>
+					<div class="clear"></div>
 				</section>
 
 
