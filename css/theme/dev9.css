@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /**
  * Dev9 theme for reveal.js.
  *
@@ -47,13 +48,16 @@ section {
     background: none;
     content: ''; }
 
-ul ul {
-  list-style-type: disc !important; }
-
 li {
-  color: orange; }
+  list-style-type: none;
+  padding-left: 1em;
+  text-indent: -.7em; }
   li span {
     color: #000; }
+
+li:before {
+  content: "• ";
+  color: orange; }
 
 html.cover-page body {
   background: url("../../images/cover-background.svg");
@@ -85,6 +89,123 @@ html.cover-page body {
     width: 300px;
     height: 237px;
     z-index: 1; }
+
+.left-50-slide {
+  display: inline;
+  float: left;
+  width: 48%;
+  height: 100%; }
+
+.right-50-slide {
+  display: inline;
+  float: right;
+  width: 48%;
+  height: 100%; }
+
+.left-70-slide {
+  display: inline;
+  float: left;
+  width: 68%; }
+
+.right-70-slide {
+  display: inline;
+  float: right;
+  width: 68%; }
+
+.right-30-slide {
+  display: inline;
+  float: right;
+  width: 27%; }
+
+.left-30-slide {
+  display: inline;
+  float: left;
+  width: 27%; }
+
+div.clear {
+  clear: both; }
+
+div.center-contents {
+  text-align: center; }
+  div.center-contents small {
+    font-size: 0.50em;
+    vertical-align: top;
+    color: #666;
+    font-style: oblique; }
+
+.reveal pre code {
+  font-size: 0.70em;
+  max-height: 50em; }
+
+.reveal section img.no-border {
+  border: 0px;
+  box-shadow: none; }
+
+.reveal section img.full-size {
+  max-width: inherit;
+  max-height: 100%;
+  padding-right: 1em; }
+
+.reveal u {
+  color: #69BE28;
+  font-style: oblique;
+  font-weight: 800; }
+
+.reveal blockquote {
+  margin: 0 10px;
+  padding: 10px 20px 25px 20px;
+  font-weight: bold;
+  color: #90918c;
+  border: 5px dashed #fff;
+  width: 85% !important; }
+
+.reveal blockquote.small {
+  width: 70% !important; }
+
+.reveal blockquote p {
+  margin: 0;
+  padding-top: 10px; }
+
+.reveal table th, .reveal table td {
+  vertical-align: top; }
+
+tbody.description {
+  font-size: 0.8em !important; }
+
+table.descriptions thead {
+  font-weight: bold;
+  color: orange; }
+
+table.descriptions tbody {
+  color: #000; }
+
+/*********************************************
+* RevealCode Focus
+*********************************************/
+.line.focus {
+  background: #3295c3; }
+
+.reveal .slides section .fragment.current-only {
+  opacity: 1;
+  visibility: visible;
+  display: none; }
+
+.reveal .slides section .fragment.current-only.current-fragment {
+  display: block; }
+
+.line {
+  display: block; }
+
+span.code-fragment {
+  font-size: 0.7em !important; }
+
+/*********************************************
+ * TAGCLOUD
+ *********************************************/
+span.clouditem {
+  padding-left: 0.15em;
+  padding-right: 0.15em;
+  line-height: 90%; }
 
 /*********************************************
  * GLOBAL STYLES
